@@ -7,7 +7,7 @@ groups:
   - promote-new-version
 
 resources:
-- name: concourse-pipeline-samples
+- name: blue-green-app-deployment
   type: git
   source:
     branch: master
@@ -27,7 +27,7 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: concourse-pipeline-samples
+  - get: blue-green-app-deployment
     trigger: true
   - task: run-unit-tests
     file: blue-green-app-deployment/ci/tasks/unit-tests.yml
@@ -36,7 +36,7 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: concourse-pipeline-samples
+  - get: blue-green-app-deployment
     trigger: true
     passed:
       - unit-tests
@@ -62,7 +62,7 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: concourse-pipeline-samples
+  - get: blue-green-app-deployment
     trigger: true
     passed:
       - deploy-app
@@ -85,7 +85,7 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: concourse-pipeline-samples
+  - get: blue-green-app-deployment
     trigger: true
     passed:
       - load-tests
